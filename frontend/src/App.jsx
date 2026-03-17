@@ -286,7 +286,7 @@ const App = () => {
             <a href="mailto:alok@example.com" className="contact-card reveal" ref={addReveal}>
               <span className="contact-icon">✉️</span>
               <span className="contact-label">Email</span>
-              <span className="contact-value">alok@example.com</span>
+              <span className="contact-value">alok.860111@gmail.com</span>
             </a>
 
             {/* Replace with your actual LinkedIn URL */}
