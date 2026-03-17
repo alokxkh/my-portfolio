@@ -33,7 +33,7 @@ const projects = [
     title: 'CNN Cat vs Dog Classifier',
     desc: 'A Convolutional Neural Network trained on the Kaggle Dogs vs Cats dataset. Achieves ~95% accuracy using data augmentation and dropout regularization.',
     tags: ['Python', 'TensorFlow', 'Keras', 'CNN'],
-    github: 'https://github.com/alok-kharwar',
+    github: 'https://github.com/alokk2005/cnn-cat-vs-dog-classification.git',
     emoji: '🐱🐶',
     reverse: false,
   },
@@ -122,7 +122,7 @@ const App = () => {
         <section className="hero" id="home">
           <div className="hero-left">
             <div className="hero-eyebrow"><span></span> B.Tech CSE (AI) Student</div>
-            <h1 className="one">Hi, I'm <em>Alok Kharwar</em></h1>
+            <h1 className="one">Hi, I'm <em>Alok</em></h1>
             <div className="two">
               I am a <span className="bold">&lt;Developer/&gt;</span> passionate about
               AI, Machine Learning, and building things that actually work.
@@ -156,7 +156,7 @@ const App = () => {
                 </div>
                 <div className="info-row">
                   <span className="info-label">Age</span>
-                  <span className="info-value">24</span>
+                  <span className="info-value">18</span>
                 </div>
                 <div className="info-row">
                   <span className="info-label">City</span>
