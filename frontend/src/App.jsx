@@ -266,7 +266,7 @@ const App = () => {
             </p>
             {/* Replace href with your actual PDF path e.g. /resume.pdf or ./Alok_Resume.pdf */}
             <a
-              href="/Alok_Kharwar_Resume.pdf"
+              href="https://drive.google.com/file/d/1vx3OBpF_sJoLdTbQcySjioXLt9sU0EyW/view?usp=sharing"
               download="Alok_Kharwar_Resume.pdf"
               className="btn btn-primary resume-btn"
             >
@@ -283,7 +283,7 @@ const App = () => {
           </div>
           <div className="contact-grid">
             {/* Replace with your actual email */}
-            <a href="mailto:alok@example.com" className="contact-card reveal" ref={addReveal}>
+            <a href="mailto:alok.860111@gmail.com" className="contact-card reveal" ref={addReveal}>
               <span className="contact-icon">✉️</span>
               <span className="contact-label">Email</span>
               <span className="contact-value">alok.860111@gmail.com</span>
@@ -291,7 +291,7 @@ const App = () => {
 
             {/* Replace with your actual LinkedIn URL */}
             <a
-              href="https://linkedin.com/in/alok-kharwar"
+              href="https://www.linkedin.com/in/alok-kharwar-282b08328"
               target="_blank"
               rel="noreferrer"
               className="contact-card reveal"
@@ -299,12 +299,12 @@ const App = () => {
             >
               <span className="contact-icon">💼</span>
               <span className="contact-label">LinkedIn</span>
-              <span className="contact-value">linkedin.com/in/alok-kharwar</span>
+              <span className="contact-value">linkedin.com/in/alok-kharwar-282b08328</span>
             </a>
 
             {/* Replace with your actual GitHub URL */}
             <a
-              href="https://github.com/alok-kharwar"
+              href="https://github.com/alokk2005"
               target="_blank"
               rel="noreferrer"
               className="contact-card reveal"
@@ -312,7 +312,7 @@ const App = () => {
             >
               <span className="contact-icon">🐙</span>
               <span className="contact-label">GitHub</span>
-              <span className="contact-value">github.com/alok-kharwar</span>
+              <span className="contact-value">github.com/alokk2005</span>
             </a>
           </div>
         </section>
