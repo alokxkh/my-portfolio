@@ -304,7 +304,7 @@ const App = () => {
 
             {/* Replace with your actual GitHub URL */}
             <a
-              href="https://github.com/alokk2005"
+              href="https://github.com/alokxkh"
               target="_blank"
               rel="noreferrer"
               className="contact-card reveal"
