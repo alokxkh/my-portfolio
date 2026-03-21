@@ -312,7 +312,7 @@ const App = () => {
             >
               <span className="contact-icon">🐙</span>
               <span className="contact-label">GitHub</span>
-              <span className="contact-value">github.com/alokk2005</span>
+              <span className="contact-value">github.com/alokxkh</span>
             </a>
           </div>
         </section>
