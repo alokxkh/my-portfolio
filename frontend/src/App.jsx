@@ -1,30 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 /* ─────────────────────────────────────────
    DATA
 ───────────────────────────────────────── */
 const skills = [
-  {
-    category: 'Programming',
-    icon: '💻',
-    items: ['C', 'C++', 'Python'],
-  },
-  {
-    category: 'Web Dev',
-    icon: '🌐',
-    items: ['HTML', 'CSS', 'JavaScript', 'React'],
-  },
-  {
-    category: 'AI / ML',
-    icon: '🤖',
-    items: ['TensorFlow', 'Keras', 'Pandas', 'NumPy', 'Scikit-learn'],
-  },
-  {
-    category: 'Tools',
-    icon: '🛠',
-    items: ['Git', 'GitHub', 'VS Code', 'Jupyter', 'Tableau'],
-  },
+  { category: 'Programming', icon: '💻', items: ['C', 'C++', 'Python'] },
+  { category: 'Web Dev',     icon: '🌐', items: ['HTML', 'CSS', 'JavaScript', 'React'] },
+  { category: 'AI / ML',     icon: '🤖', items: ['TensorFlow', 'Keras', 'Pandas', 'NumPy', 'Scikit-learn'] },
+  { category: 'Tools',       icon: '🛠',  items: ['Git', 'GitHub', 'VS Code', 'Jupyter', 'Tableau'] },
 ]
 
 const projects = [
@@ -36,6 +20,7 @@ const projects = [
     github: 'https://github.com/alokk2005/cnn-cat-vs-dog-classification.git',
     emoji: '🐱🐶',
     reverse: false,
+    color: '#9b4dff',
   },
   {
     num: '02 — Algorithms (C++)',
@@ -45,6 +30,7 @@ const projects = [
     github: 'https://github.com/alok-kharwar',
     emoji: '📊',
     reverse: true,
+    color: '#ff4dac',
   },
   {
     num: '03 — Data Visualization',
@@ -54,6 +40,7 @@ const projects = [
     github: 'https://github.com/alok-kharwar',
     emoji: '📈',
     reverse: false,
+    color: '#4d9fff',
   },
   {
     num: '04 — OS Concepts (C)',
@@ -63,6 +50,7 @@ const projects = [
     github: 'https://github.com/alok-kharwar',
     emoji: '⚙️',
     reverse: true,
+    color: '#ff9b4d',
   },
   {
     num: '05 — AI Chatbot',
@@ -72,73 +60,272 @@ const projects = [
     github: 'https://github.com/alok-kharwar',
     emoji: '🏠',
     reverse: false,
+    color: '#4dffb8',
   },
 ]
+
+/* ─────────────────────────────────────────
+   TYPEWRITER HOOK
+───────────────────────────────────────── */
+function useTypewriter(texts, speed = 80, pause = 1800) {
+  const [display, setDisplay] = useState('')
+  const [idx, setIdx]         = useState(0)
+  const [charIdx, setCharIdx] = useState(0)
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const current = texts[idx]
+    let timeout
+
+    if (!deleting && charIdx < current.length) {
+      timeout = setTimeout(() => setCharIdx(c => c + 1), speed)
+    } else if (!deleting && charIdx === current.length) {
+      timeout = setTimeout(() => setDeleting(true), pause)
+    } else if (deleting && charIdx > 0) {
+      timeout = setTimeout(() => setCharIdx(c => c - 1), speed / 2)
+    } else if (deleting && charIdx === 0) {
+      setDeleting(false)
+      setIdx(i => (i + 1) % texts.length)
+    }
+
+    setDisplay(current.slice(0, charIdx))
+    return () => clearTimeout(timeout)
+  }, [charIdx, deleting, idx, texts, speed, pause])
+
+  return display
+}
+
+/* ─────────────────────────────────────────
+   AURORA BACKGROUND
+───────────────────────────────────────── */
+function Aurora() {
+  return (
+    <div className="aurora-wrap" aria-hidden="true">
+      <div className="aurora a1" />
+      <div className="aurora a2" />
+      <div className="aurora a3" />
+      <div className="aurora a4" />
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────
+   FLOATING PARTICLES
+───────────────────────────────────────── */
+function Particles() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx    = canvas.getContext('2d')
+    let W = canvas.width  = window.innerWidth
+    let H = canvas.height = window.innerHeight * 3
+
+    const COUNT = 80
+    const dots  = Array.from({ length: COUNT }, () => ({
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      r:  Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      a:  Math.random(),
+    }))
+
+    let raf
+    function draw() {
+      ctx.clearRect(0, 0, W, H)
+      dots.forEach(d => {
+        d.x += d.vx; d.y += d.vy
+        if (d.x < 0) d.x = W; if (d.x > W) d.x = 0
+        if (d.y < 0) d.y = H; if (d.y > H) d.y = 0
+        ctx.beginPath()
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(155,77,255,${d.a * 0.6})`
+        ctx.fill()
+      })
+      // draw lines between close dots
+      for (let i = 0; i < dots.length; i++) {
+        for (let j = i + 1; j < dots.length; j++) {
+          const dx = dots[i].x - dots[j].x
+          const dy = dots[i].y - dots[j].y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist < 120) {
+            ctx.beginPath()
+            ctx.moveTo(dots[i].x, dots[i].y)
+            ctx.lineTo(dots[j].x, dots[j].y)
+            ctx.strokeStyle = `rgba(155,77,255,${(1 - dist / 120) * 0.12})`
+            ctx.lineWidth = 0.5
+            ctx.stroke()
+          }
+        }
+      }
+      raf = requestAnimationFrame(draw)
+    }
+    draw()
+
+    const onResize = () => {
+      W = canvas.width  = window.innerWidth
+      H = canvas.height = window.innerHeight * 3
+    }
+    window.addEventListener('resize', onResize)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize) }
+  }, [])
+
+  return <canvas ref={canvasRef} className="particles-canvas" aria-hidden="true" />
+}
+
+/* ─────────────────────────────────────────
+   CURSOR GLOW
+───────────────────────────────────────── */
+function CursorGlow() {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    let px = window.innerWidth / 2, py = window.innerHeight / 2
+    let cx = px, cy = py
+    let raf
+
+    const onMove = e => { px = e.clientX; py = e.clientY }
+    window.addEventListener('mousemove', onMove)
+
+    function animate() {
+      cx += (px - cx) * 0.08
+      cy += (py - cy) * 0.08
+      el.style.transform = `translate(${cx - 200}px, ${cy - 200}px)`
+      raf = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove', onMove) }
+  }, [])
+
+  return <div ref={ref} className="cursor-glow" aria-hidden="true" />
+}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+function Nav() {
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
+  }, [])
+
+  return (
+    <nav className={scrolled ? 'nav-scrolled' : ''}>
+      <div className="logo">
+        <span className="logo-bracket">&lt;</span>Alok<span className="logo-bracket">/&gt;</span>
+      </div>
+      <ul>
+        {['home','about','skills','projects','contact'].map(s => (
+          <li key={s}><a href={`#${s}`}>{s.charAt(0).toUpperCase() + s.slice(1)}</a></li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 /* ─────────────────────────────────────────
    COMPONENT
 ───────────────────────────────────────── */
 const App = () => {
   const revealRefs = useRef([])
+  const typed = useTypewriter(['Developer', 'AI Engineer', 'ML Enthusiast', 'Problem Solver'])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry, i) => {
           if (entry.isIntersecting) {
-            setTimeout(() => entry.target.classList.add('visible'), i * 100)
+            setTimeout(() => entry.target.classList.add('visible'), i * 80)
             observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     )
-    revealRefs.current.forEach((el) => el && observer.observe(el))
+    revealRefs.current.forEach(el => el && observer.observe(el))
     return () => observer.disconnect()
   }, [])
 
-  const addReveal = (el) => {
+  const addReveal = el => {
     if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el)
   }
 
   return (
     <div id="d1">
 
+      {/* ══ GLOBAL BG EFFECTS ══ */}
+      <Aurora />
+      <Particles />
+      <CursorGlow />
+
       {/* ══ NAV ══ */}
-      <nav>
-        <div className="logo">Alok Kharwar</div>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+      <Nav />
 
       <main>
 
         {/* ══ HERO ══ */}
         <section className="hero" id="home">
           <div className="hero-left">
-            <div className="hero-eyebrow"><span></span> B.Tech CSE (AI) Student</div>
-            <h1 className="one">Hi, I'm <em>Alok</em></h1>
-            <div className="two">
-              I am a <span className="bold">&lt;Developer/&gt;</span> passionate about
-              AI, Machine Learning, and building things that actually work.
+            <div className="hero-eyebrow">
+              <span className="eyebrow-dot" />
+              B.Tech CSE (AI) Student
             </div>
+
+            <h1 className="hero-title">
+              Hi, I'm <span className="glitch-name" data-text="Alok">Alok</span>
+            </h1>
+
+            <div className="hero-typewriter">
+              I am a&nbsp;
+              <span className="typed-text">{typed}</span>
+              <span className="caret">|</span>
+            </div>
+
+            <p className="hero-sub">
+              Passionate about AI, Machine Learning, and building things that
+              actually&nbsp;<em>work</em>.
+            </p>
+
             <div className="button-container">
-              <a href="#contact" className="btn btn-primary">Contact Me</a>
-              <a href="#projects" className="btn btn-ghost">View Projects</a>
+              <a href="#contact" className="btn btn-primary">
+                <span>Contact Me</span>
+                <div className="btn-shine" />
+              </a>
+              <a href="#projects" className="btn btn-ghost">View Projects ↓</a>
+            </div>
+
+            <div className="hero-stats">
+              {[['5+','Projects'],['3+','AI Models'],['10+','Skills']].map(([n,l]) => (
+                <div className="stat-item" key={l}>
+                  <span className="stat-num">{n}</span>
+                  <span className="stat-label">{l}</span>
+                </div>
+              ))}
             </div>
           </div>
+
           <div className="hero-right">
-            <div className="hero-img-wrap">
-              <div className="img-placeholder">👨‍💻</div>
+            <div className="hero-orb-ring">
+              <div className="orb-ring r1" />
+              <div className="orb-ring r2" />
+              <div className="orb-ring r3" />
+              <div className="hero-img-wrap">
+                <div className="img-placeholder">👨‍💻</div>
+              </div>
             </div>
             <div className="hero-badge">
               <span className="badge-num">5+</span>
               <span className="badge-label">Projects Done</span>
+            </div>
+            <div className="hero-badge2">
+              <span className="badge-icon">🤖</span>
+              <span className="badge-label2">AI · ML</span>
             </div>
           </div>
         </section>
@@ -146,30 +333,23 @@ const App = () => {
         {/* ══ ABOUT ══ */}
         <section className="about-section" id="about">
           <div className="about-card reveal" ref={addReveal}>
-            <div className="section-label"><span></span> 🧑‍💻 Who I Am <span></span></div>
+            <div className="card-glow-border" />
+            <div className="section-label"><span /> 🧑‍💻 Who I Am <span /></div>
             <h2>About Me</h2>
             <div className="about-grid">
               <div className="about-info">
-                <div className="info-row">
-                  <span className="info-label">Name</span>
-                  <span className="info-value">Alok Kharwar</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-label">Age</span>
-                  <span className="info-value">18</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-label">City</span>
-                  <span className="info-value">Gorakhpur, UP</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-label">Course</span>
-                  <span className="info-value">B.Tech CSE (AI)</span>
-                </div>
-                <div className="info-row">
-                  <span className="info-label">Interests</span>
-                  <span className="info-value">AI · ML · Web Dev · DSA</span>
-                </div>
+                {[
+                  ['Name',      'Alok Kharwar'],
+                  ['Age',       '18'],
+                  ['City',      'Gorakhpur, UP'],
+                  ['Course',    'B.Tech CSE (AI)'],
+                  ['Interests', 'AI · ML · Web Dev · DSA'],
+                ].map(([label, value]) => (
+                  <div className="info-row" key={label}>
+                    <span className="info-label">{label}</span>
+                    <span className="info-value">{value}</span>
+                  </div>
+                ))}
               </div>
               <div className="about-right">
                 <p className="about-bio">
@@ -184,7 +364,7 @@ const App = () => {
                   looking for internship and freelance opportunities.
                 </p>
                 <div className="interest-chips">
-                  {['Artificial Intelligence', 'Machine Learning', 'Web Development', 'Data Structures', 'Open Source'].map((item) => (
+                  {['Artificial Intelligence','Machine Learning','Web Development','Data Structures','Open Source'].map(item => (
                     <span className="chip" key={item}>{item}</span>
                   ))}
                 </div>
@@ -196,18 +376,19 @@ const App = () => {
         {/* ══ SKILLS ══ */}
         <section className="skills-section" id="skills">
           <div className="section-header reveal" ref={addReveal}>
-            <div className="section-label"><span></span> 🛠 What I Know <span></span></div>
+            <div className="section-label"><span /> 🛠 What I Know <span /></div>
             <h2>Skills</h2>
           </div>
           <div className="skills-grid">
             {skills.map((s, idx) => (
               <div className="skill-card reveal" key={idx} ref={addReveal}>
+                <div className="skill-card-bg" />
                 <div className="skill-card-header">
                   <span className="skill-icon">{s.icon}</span>
                   <span className="skill-category">{s.category}</span>
                 </div>
                 <div className="skill-items">
-                  {s.items.map((item) => (
+                  {s.items.map(item => (
                     <span className="skill-pill" key={item}>{item}</span>
                   ))}
                 </div>
@@ -219,7 +400,7 @@ const App = () => {
         {/* ══ PROJECTS ══ */}
         <section className="projects-section" id="projects">
           <div className="section-header reveal" ref={addReveal}>
-            <div className="section-label"><span></span> 📂 My Work <span></span></div>
+            <div className="section-label"><span /> 📂 My Work <span /></div>
             <h2>Featured Projects</h2>
           </div>
 
@@ -228,8 +409,10 @@ const App = () => {
               key={idx}
               className={`project-card reveal${p.reverse ? ' reverse' : ''}`}
               ref={addReveal}
+              style={{ '--proj-color': p.color }}
             >
               <div className="project-image project-emoji-panel">
+                <div className="proj-panel-bg" />
                 <div className="project-emoji">{p.emoji}</div>
               </div>
               <div className="project-info">
@@ -237,18 +420,12 @@ const App = () => {
                 <div className="text">{p.title}</div>
                 <p>{p.desc}</p>
                 <div className="project-tags">
-                  {p.tags.map((t) => (
-                    <span className="tag" key={t}>{t}</span>
-                  ))}
+                  {p.tags.map(t => <span className="tag" key={t}>{t}</span>)}
                 </div>
                 <div className="project-actions">
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-primary"
-                  >
-                    GitHub →
+                  <a href={p.github} target="_blank" rel="noreferrer" className="btn btn-primary">
+                    <span>GitHub →</span>
+                    <div className="btn-shine" />
                   </a>
                 </div>
               </div>
@@ -259,18 +436,17 @@ const App = () => {
         {/* ══ RESUME ══ */}
         <section className="resume-section" id="resume">
           <div className="resume-card reveal" ref={addReveal}>
-            <div className="section-label"><span></span> 📄 Resume <span></span></div>
+            <div className="card-glow-border" />
+            <div className="section-label"><span /> 📄 Resume <span /></div>
             <h2>My Resume</h2>
-            <p className="resume-desc">
-              Want to know more about my experience and education? Download my resume below.
-            </p>
-            {/* Replace href with your actual PDF path e.g. /resume.pdf or ./Alok_Resume.pdf */}
+            <p className="resume-desc">Want to know more about my experience and education? Download my resume below.</p>
             <a
               href="https://drive.google.com/file/d/1vx3OBpF_sJoLdTbQcySjioXLt9sU0EyW/view?usp=sharing"
               download="Alok_Kharwar_Resume.pdf"
               className="btn btn-primary resume-btn"
             >
-              ⬇ Download Resume (PDF)
+              <span>⬇ Download Resume (PDF)</span>
+              <div className="btn-shine" />
             </a>
           </div>
         </section>
@@ -278,48 +454,36 @@ const App = () => {
         {/* ══ CONTACT ══ */}
         <section className="contact-section" id="contact">
           <div className="section-header reveal" ref={addReveal}>
-            <div className="section-label"><span></span> 📞 Get In Touch <span></span></div>
+            <div className="section-label"><span /> 📞 Get In Touch <span /></div>
             <h2>Contact Me</h2>
           </div>
           <div className="contact-grid">
-            {/* Replace with your actual email */}
-            <a href="mailto:alok.860111@gmail.com" className="contact-card reveal" ref={addReveal}>
-              <span className="contact-icon">✉️</span>
-              <span className="contact-label">Email</span>
-              <span className="contact-value">alok.860111@gmail.com</span>
-            </a>
-
-            {/* Replace with your actual LinkedIn URL */}
-            <a
-              href="https://www.linkedin.com/in/alok-kharwar-282b08328"
-              target="_blank"
-              rel="noreferrer"
-              className="contact-card reveal"
-              ref={addReveal}
-            >
-              <span className="contact-icon">💼</span>
-              <span className="contact-label">LinkedIn</span>
-              <span className="contact-value">linkedin.com/in/alok-kharwar-282b08328</span>
-            </a>
-
-            {/* Replace with your actual GitHub URL */}
-            <a
-              href="https://github.com/alokxkh"
-              target="_blank"
-              rel="noreferrer"
-              className="contact-card reveal"
-              ref={addReveal}
-            >
-              <span className="contact-icon">🐙</span>
-              <span className="contact-label">GitHub</span>
-              <span className="contact-value">github.com/alokxkh</span>
-            </a>
+            {[
+              { href: 'mailto:alok.860111@gmail.com',             icon: '✉️', label: 'Email',    value: 'alok.860111@gmail.com' },
+              { href: 'https://www.linkedin.com/in/alok-kharwar-282b08328', icon: '💼', label: 'LinkedIn', value: 'alok-kharwar-282b08328', blank: true },
+              { href: 'https://github.com/alokxkh',              icon: '🐙', label: 'GitHub',   value: 'github.com/alokxkh',   blank: true },
+            ].map(c => (
+              <a
+                key={c.label}
+                href={c.href}
+                target={c.blank ? '_blank' : undefined}
+                rel={c.blank ? 'noreferrer' : undefined}
+                className="contact-card reveal"
+                ref={addReveal}
+              >
+                <div className="contact-card-glow" />
+                <span className="contact-icon">{c.icon}</span>
+                <span className="contact-label">{c.label}</span>
+                <span className="contact-value">{c.value}</span>
+              </a>
+            ))}
           </div>
         </section>
 
         {/* ══ FOOTER ══ */}
         <footer className="footer">
-          <p>© {new Date().getFullYear()} Alok Kharwar · Built with React</p>
+          <div className="footer-line" />
+          <p>© {new Date().getFullYear()} <span className="footer-name">Alok Kharwar</span></p>
         </footer>
 
       </main>
