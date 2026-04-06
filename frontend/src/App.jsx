@@ -6,9 +6,9 @@ import './App.css'
 ───────────────────────────────────────── */
 const skills = [
   { category: 'Programming', icon: '💻', items: ['C', 'C++', 'Python'] },
-  { category: 'Web Dev',     icon: '🌐', items: ['HTML', 'CSS', 'JavaScript', 'React'] },
-  { category: 'AI / ML',     icon: '🤖', items: ['TensorFlow', 'Keras', 'Pandas', 'NumPy', 'Scikit-learn'] },
-  { category: 'Tools',       icon: '🛠',  items: ['Git', 'GitHub', 'VS Code', 'Jupyter', 'Tableau'] },
+  { category: 'Web Dev', icon: '🌐', items: ['HTML', 'CSS', 'JavaScript', 'React'] },
+  { category: 'AI / ML', icon: '🤖', items: ['TensorFlow', 'Keras', 'Pandas', 'NumPy', 'Scikit-learn'] },
+  { category: 'Tools', icon: '🛠', items: ['Git', 'GitHub', 'VS Code', 'Jupyter', 'Tableau'] },
 ]
 
 const projects = [
@@ -69,7 +69,7 @@ const projects = [
 ───────────────────────────────────────── */
 function useTypewriter(texts, speed = 80, pause = 1800) {
   const [display, setDisplay] = useState('')
-  const [idx, setIdx]         = useState(0)
+  const [idx, setIdx] = useState(0)
   const [charIdx, setCharIdx] = useState(0)
   const [deleting, setDeleting] = useState(false)
 
@@ -117,18 +117,18 @@ function Particles() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const ctx    = canvas.getContext('2d')
-    let W = canvas.width  = window.innerWidth
+    const ctx = canvas.getContext('2d')
+    let W = canvas.width = window.innerWidth
     let H = canvas.height = window.innerHeight * 3
 
     const COUNT = 80
-    const dots  = Array.from({ length: COUNT }, () => ({
-      x:  Math.random() * W,
-      y:  Math.random() * H,
-      r:  Math.random() * 1.5 + 0.3,
+    const dots = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.5 + 0.3,
       vx: (Math.random() - 0.5) * 0.25,
       vy: (Math.random() - 0.5) * 0.25,
-      a:  Math.random(),
+      a: Math.random(),
     }))
 
     let raf
@@ -164,7 +164,7 @@ function Particles() {
     draw()
 
     const onResize = () => {
-      W = canvas.width  = window.innerWidth
+      W = canvas.width = window.innerWidth
       H = canvas.height = window.innerHeight * 3
     }
     window.addEventListener('resize', onResize)
@@ -221,7 +221,7 @@ function Nav() {
         <span className="logo-bracket">&lt;</span>Alok<span className="logo-bracket">/&gt;</span>
       </div>
       <ul>
-        {['home','about','skills','projects','contact'].map(s => (
+        {['home', 'about', 'skills', 'projects', 'contact'].map(s => (
           <li key={s}><a href={`#${s}`}>{s.charAt(0).toUpperCase() + s.slice(1)}</a></li>
         ))}
       </ul>
@@ -301,7 +301,7 @@ const App = () => {
             </div>
 
             <div className="hero-stats">
-              {[['5+','Projects'],['3+','AI Models'],['10+','Skills']].map(([n,l]) => (
+              {[['5+', 'Projects'], ['3+', 'AI Models'], ['10+', 'Skills']].map(([n, l]) => (
                 <div className="stat-item" key={l}>
                   <span className="stat-num">{n}</span>
                   <span className="stat-label">{l}</span>
@@ -339,10 +339,10 @@ const App = () => {
             <div className="about-grid">
               <div className="about-info">
                 {[
-                  ['Name',      'Alok Kharwar'],
-                  ['Age',       '18'],
-                  ['City',      'Gorakhpur, UP'],
-                  ['Course',    'B.Tech CSE (AI)'],
+                  ['Name', 'Alok Kharwar'],
+                  ['Age', '18'],
+                  ['City', 'Gorakhpur, UP'],
+                  ['Course', 'B.Tech CSE (AI)'],
                   ['Interests', 'AI · ML · Web Dev · DSA'],
                 ].map(([label, value]) => (
                   <div className="info-row" key={label}>
@@ -364,12 +364,118 @@ const App = () => {
                   looking for internship and freelance opportunities.
                 </p>
                 <div className="interest-chips">
-                  {['Artificial Intelligence','Machine Learning','Web Development','Data Structures','Open Source'].map(item => (
+                  {['Artificial Intelligence', 'Machine Learning', 'Web Development', 'Data Structures', 'Open Source'].map(item => (
                     <span className="chip" key={item}>{item}</span>
                   ))}
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ══ EDUCATION & CERTIFICATIONS ══ */}
+        <section className="edu-section" id="education">
+          <div className="section-header reveal" ref={addReveal}>
+            <div className="section-label"><span /> 🎓 Background <span /></div>
+            <h2>Education &amp; Certifications</h2>
+          </div>
+
+          <div className="edu-cert-grid">
+
+            {/* ── Education card ── */}
+            <div className="edu-card reveal" ref={addReveal}>
+              <div className="card-glow-border" />
+              <div className="edu-card-title">
+                <span className="edu-card-icon">🎓</span>
+                Education
+              </div>
+              <div className="edu-timeline">
+
+                {[
+                  {
+                    degree: 'B.Tech in Computer Science Engineering (AI)',
+                    sub: 'KIET Deemed-to-be University',
+                    meta: '2024 – 2028  •  Ghaziabad , Delhi NCR',
+                    active: true,
+                  },
+                  {
+                    degree: 'Intermediate (Class XII)',
+                    sub: "PM SHRI Kendriya Vidyalaya GANGRANI",
+                    meta: '2024  •  CBSE Board  •  Science (PCM) ',
+                    active: false,
+                  },
+                  {
+                    degree: 'High School (Class X)',
+                    sub: "KUSHINAGAR PUB SCH AMWA KUBERSTHAN",
+                    meta: '2022  •  CBSE Board  •  Science ',
+                    active: false,
+                  },
+                ].map((e, i) => (
+                  <div className={`edu-item${e.active ? ' edu-active' : ''}`} key={i}>
+                    <div className="edu-dot">
+                      {e.active && <div className="edu-dot-pulse" />}
+                    </div>
+                    <div className="edu-content">
+                      <div className="edu-degree">{e.degree}</div>
+                      <div className="edu-school">{e.sub}</div>
+                      <div className="edu-meta">{e.meta}</div>
+                    </div>
+                  </div>
+                ))}
+
+              </div>
+            </div>
+
+            {/* ── Certifications card ── */}
+            <div className="cert-card reveal" ref={addReveal}>
+              <div className="card-glow-border" />
+              <div className="edu-card-title">
+                <span className="edu-card-icon">🏅</span>
+                Certifications
+              </div>
+              <div className="cert-list">
+
+                {[
+                  {
+                    badge: 'AWS',
+                    color: '#FF9900',
+                    bg: 'linear-gradient(135deg,#1a0f00,#3d2200)',
+                    name: 'AWS Certified Cloud Practitioner',
+                    issuer: 'Amazon Web Services',
+                    year: '2025',
+                  },
+                  {
+                    badge: 'AI',
+                    color: '#FF6F00',
+                    bg: 'linear-gradient(135deg,#1a1000,#3d2800)',
+                    name: 'AI for Everyone',
+                    issuer: 'DeepLearning.AI (Coursera)',
+                    year: '2024',
+                  },
+                  {
+                    badge: 'AI',
+                    color: '#4d9fff',
+                    bg: 'linear-gradient(135deg,#00101a,#001f3d)',
+                    name: 'AMD AI Academy Certification',
+                    issuer: 'Hackingly',
+                    year: '2026',
+                  },
+                ].map((c, i) => (
+                  <div className="cert-item" key={i}>
+                    <div className="cert-badge" style={{ background: c.bg, color: c.color, borderColor: c.color + '44' }}>
+                      {c.badge}
+                    </div>
+                    <div className="cert-info">
+                      <div className="cert-name">{c.name}</div>
+                      <div className="cert-issuer">{c.issuer} <span className="cert-year">• {c.year}</span></div>
+                    </div>
+                    <div className="cert-arrow">→</div>
+                  </div>
+                ))}
+
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -459,9 +565,9 @@ const App = () => {
           </div>
           <div className="contact-grid">
             {[
-              { href: 'mailto:alok.860111@gmail.com',             icon: '✉️', label: 'Email',    value: 'alok.860111@gmail.com' },
+              { href: 'mailto:alok.860111@gmail.com', icon: '✉️', label: 'Email', value: 'alok.860111@gmail.com' },
               { href: 'https://www.linkedin.com/in/alok-kharwar-282b08328', icon: '💼', label: 'LinkedIn', value: 'alok-kharwar-282b08328', blank: true },
-              { href: 'https://github.com/alokxkh',              icon: '🐙', label: 'GitHub',   value: 'github.com/alokxkh',   blank: true },
+              { href: 'https://github.com/alokxkh', icon: '🐙', label: 'GitHub', value: 'github.com/alokxkh', blank: true },
             ].map(c => (
               <a
                 key={c.label}
