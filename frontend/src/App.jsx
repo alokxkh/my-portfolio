@@ -547,7 +547,7 @@ const App = () => {
             <h2>My Resume</h2>
             <p className="resume-desc">Want to know more about my experience and education? Download my resume below.</p>
             <a
-              href="https://drive.google.com/file/d/1vx3OBpF_sJoLdTbQcySjioXLt9sU0EyW/view?usp=sharing"
+              href="https://drive.google.com/file/d/1JxfXSXAWTjdSSLyRDtML9-sIsSiiwRbP/view?usp=sharing"
               download="Alok_Kharwar_Resume.pdf"
               className="btn btn-primary resume-btn"
             >
