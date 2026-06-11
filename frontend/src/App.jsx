@@ -435,7 +435,14 @@ const App = () => {
               </div>
               <div className="cert-list">
 
-                {[
+                {[{
+                    badge: 'AWS',
+                    color: '#FF9900',
+                    bg: 'linear-gradient(135deg,#1a0f00,#3d2200)',
+                    name: 'AWS Certified Machine Learning Engineer – Associate',
+                    issuer: 'Amazon Web Services',
+                    year: '2026',
+                  },
                   {
                     badge: 'AWS',
                     color: '#FF9900',
